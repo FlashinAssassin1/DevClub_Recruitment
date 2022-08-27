@@ -8,10 +8,21 @@
     <p>Rating: {{ court.rating }}</p>
     <p>Capacity: {{ court.capacity }}</p>
 
-    <h3>Available Slots:</h3>
-    {% for slot in slots %}
-        {{ slot.start|date:"H:i" }}-{{ slot.end|date:"H:i" }}
-    {% endfor %}
+    {% if slots %}
+        <h3>Available Slots:</h3>
+        <form method="post">
+            {% csrf_token %}
+            <label for="slot">Choose a Slot:</label>
+            <select name="slot" id="slot">
+                {% for slot in slots %}
+                <option value="{{ slot.pk }}">{{ slot.start|date:"j M H:i" }}-{{ slot.end|date:"H:i" }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Book Slot</button>
+        </form>
+    {% else %}
+        <h3>No Slots Currently!</h3>
+    {% endif %}
 
     {% if user.type == 2 %}
     <form method="post">

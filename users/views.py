@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from users.forms import MemberRegisterForm
 from django.contrib import messages
-from sports.models import Sport
+from sports.models import Sport, UserBooking
 from django.contrib.auth.decorators import login_required,user_passes_test
 
 from users.models import CustomUser
@@ -45,10 +45,13 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+    
+    userbookings = UserBooking.objects.filter(user=request.user).order_by('-modified_time')
 
     context = {
         'u_form': u_form,
         'p_form': p_form,
+        'userbookings':userbookings,
     }
     return render(request, 'users/profile.html', context)
 

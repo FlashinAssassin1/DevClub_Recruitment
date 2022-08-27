@@ -49,4 +49,12 @@ class UserBooking(models.Model):
     modified_time = models.DateTimeField(auto_now=True)
     status = models.PositiveIntegerField(choices=STAT_CHOICES)
 
+class Item(models.Model):
+    name = models.CharField(max_length=100)
+    image = models.ImageField(default='item.jpg',upload_to='item_pics')
+    sport = models.ForeignKey(Sport,on_delete=models.CASCADE)
+    number = models.PositiveIntegerField()
+    
+
+
 

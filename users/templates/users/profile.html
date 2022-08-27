@@ -12,13 +12,39 @@
             <br>
             Description: {{ user.description }}
         </p>
+
+        <h3>Recent Actions</h3>
+        <table class="courts">
+            <thead>
+                <tr>
+                    <th class="th">Time of booking</th>
+                    <th class="th">Slot</th>
+                    <th class="th">Court</th>
+                    <th class="th">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in userbookings %}
+                <tr>
+                    <td class="td">{{ booking.booking_time|date:"j M H:i" }}</td>
+                    <td class="td">{{ booking.slot.start|date:"j M H:i" }}-{{ booking.slot.end|date:"H:i" }}</td>
+                    <td class="td">{{ booking.slot.court }}</td>
+                    {% if booking.status == 0 %}
+                    <td class="td">Rejected</td>
+                    {% else %}
+                    <td class="td">Accepted</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <fieldset>
-                <legend>Profile Info</legend>
+                <h3>Update Profile Info</h3>
                 {{ u_form.as_p }}
                 {{ p_form.as_p }}
-            </fieldset>
             <div>
                 <button type="submit">Update</button>
             </div>
