@@ -1,0 +1,37 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <h3>Welcome to the {{ court }} page</h3>
+    <br>
+    <br>
+    <img src="{{ court.image.url }}" alt="{{ court }}" class="sport-img">
+    <p>Sport: {{ court.sport }}</p>
+    <p>Rating: {{ court.rating }}</p>
+    <p>Capacity: {{ court.capacity }}</p>
+
+    <h3>Available Slots:</h3>
+    {% for slot in slots %}
+        {{ slot.start|date:"H:i" }}-{{ slot.end|date:"H:i" }}
+    {% endfor %}
+
+    {% if user.type == 2 %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>Add a new slot!</h3>
+        <label for="date">Date of Slot</label>
+        <input type="date" name="date">
+        <br>
+        <br>
+        <label for="starttime">Start Time</label>
+        <input type="time" name="starttime">
+        <br>
+        <br>
+        <label for="endtime">End Time</label>
+        <input type="time" name="endtime">
+        <br>
+        <br>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+    {% endif %}
+{% endblock content%}

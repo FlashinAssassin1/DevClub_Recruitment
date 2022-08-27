@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% block content %}
+<h3>Members</h3>
+<ol>
+    {% for person in members %}
+        <li>{{ person }} <a href="{% url 'userlist' person.pk %}">Promote to Staff</a></li>
+    {% endfor %}
+</ol>
+
+<h3>Staff</h3>
+<ol>
+    {% for staffperson in staff %}
+        <li>{{ staffperson }} <a href="{% url 'userlist' staffperson.pk %}">Revoke Staff Status</a></li>
+    {% endfor %}
+</ol>
+
+{% endblock content%}

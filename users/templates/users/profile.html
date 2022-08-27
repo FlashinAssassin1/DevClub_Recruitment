@@ -1,0 +1,26 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+        <br>
+        <img src="{{ user.profile.image.url }}" class="sport-img">
+        <p>
+            Email: {{ user.email }}
+            <br>
+            Year Joined: {{ user.date_joined|date:"Y" }}
+            <br>
+            Last Login Time: {{ user.last_login|date:"l, d F Y, f A"}}
+            <br>
+            Description: {{ user.description }}
+        </p>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Profile Info</legend>
+                {{ u_form.as_p }}
+                {{ p_form.as_p }}
+            </fieldset>
+            <div>
+                <button type="submit">Update</button>
+            </div>
+        </form>
+{% endblock content %}

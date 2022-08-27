@@ -1,0 +1,14 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <fieldset style="display: inline;">
+            <legend>Become a Member Today!</legend>
+            {{ form.as_p }}
+        </fieldset>
+        <div>
+            <button type="submit">Sign Up</button>
+        </div>
+        Already Have An Account? <a href="{% url 'login' %}">Sign In</a></small>
+    </form>
+{% endblock content%}

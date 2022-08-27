@@ -1,0 +1,14 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <h3>Sport</h3>
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+        <br>
+        <a href="#">Forgot Password?</a>
+        <br>
+        Need an Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+
+    </form>
+{% endblock content%}
