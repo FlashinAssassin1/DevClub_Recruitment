@@ -9,6 +9,18 @@
     <img src="{{ sport.image.url }}" alt="{{ sport }}" class="sport-img">
     <p>{{ sport.description }}</p>
 
+    {% if inventory %}
+    <h3>Inventory</h3>
+    <ul>
+    {% for item in inventory %}
+    <li>
+        <img class="list-img" src="{{ item.image.url }}">
+        {{ item }}({{ item.number }} available)
+    </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+
     {% if courts %}
     <table class="courts">
         <thead>

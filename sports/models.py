@@ -54,7 +54,12 @@ class Item(models.Model):
     image = models.ImageField(default='item.jpg',upload_to='item_pics')
     sport = models.ForeignKey(Sport,on_delete=models.CASCADE)
     number = models.PositiveIntegerField()
-    
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse('sport-detail',kwargs={'sportid':self.sport.pk})
 
 
 

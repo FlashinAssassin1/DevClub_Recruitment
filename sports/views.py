@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin,UserPassesTestMixin
 from django.views.generic import CreateView,DetailView
-from .models import Sport,Court,Slot, UserBooking
+from .models import Item, Sport,Court,Slot, UserBooking
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from django.contrib import messages
@@ -22,7 +22,8 @@ class SportCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
 def sportdetail(request,sportid):
     sport = Sport.objects.filter(pk=sportid).first()
     courts = Court.objects.filter(sport=sport)
-    return render(request,"sports/sportdetail.html",{'sport':sport,'courts':courts})
+    inventory = Item.objects.filter(sport=sport)
+    return render(request,"sports/sportdetail.html",{'sport':sport,'courts':courts,'inventory':inventory})
 
 
 class CourtCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
