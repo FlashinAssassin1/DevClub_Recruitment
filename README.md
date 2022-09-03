@@ -7,4 +7,4 @@ Kindly read the design doc pdf in the repo to allow for easy testing of the webs
 
 The website is hosted at https://devmittalapp.herokuapp.com/
 
-It is hostes using `heroku` and uses `AWS S3` for media files.
+It is hosted using `heroku` and uses `AWS S3` for media files.
