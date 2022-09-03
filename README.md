@@ -9,4 +9,4 @@ The website is hosted at https://devmittalapp.herokuapp.com/
 
 It is hosted using `heroku` and uses `AWS S3` for media files.
 
-The research assignment is [here](https://drive.google.com/file/d/14c2jcatoUrrR3psLsD5M3Bqsg8Ay6NPM/view?usp=sharing)
+The research assignment is [here](https://drive.google.com/file/d/14c2jcatoUrrR3psLsD5M3Bqsg8Ay6NPM/view?usp=sharing).
