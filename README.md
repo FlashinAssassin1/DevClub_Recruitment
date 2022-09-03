@@ -1,4 +1,4 @@
-#DevClub Recruitment Backend
+# DevClub Recruitment Backend
 
 `DevMittal` is a simple booking system which allows for members to choose from slots created by the staff for playing at the amazing courts of Mittal Sports Complex.
 The framework used is `Django`.
