@@ -8,5 +8,6 @@ Kindly read the design doc pdf in the repo to allow for easy testing of the webs
 The website is hosted at https://devmittalapp.herokuapp.com/
 
 It is hosted using `heroku` and uses `AWS S3` for media files.
+The local version of the web app uses `sqlite3` as a database whereas the hosted version uses `PostgresSQL`.
 
 The research assignment is [here](https://drive.google.com/file/d/14c2jcatoUrrR3psLsD5M3Bqsg8Ay6NPM/view?usp=sharing).
