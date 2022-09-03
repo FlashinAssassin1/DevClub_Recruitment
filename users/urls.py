@@ -1,5 +1,5 @@
 from django.urls import path
-from users.views import home, profile, register, userlist
+from users.views import activate, home, profile, register, userlist
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -9,4 +9,5 @@ urlpatterns = [
     path('',home,name="home"),
     path('profile/',profile,name='profile'),
     path('userlist/<int:personid>/',userlist,name="userlist"),
+    path('activate/<slug:uidb64>/<slug:token>/',activate,name='activate'),
 ]

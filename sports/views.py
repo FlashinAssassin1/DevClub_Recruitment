@@ -63,11 +63,13 @@ def courtdetail(request,courtid):
             if slot.avail > 0 and thisdaybooks < 3:
                 booking = UserBooking(user=request.user,slot=slot,status=1)
                 booking.save()
-                messages.success(request, 'Your booking has been accepted!. Check Profile to see all actions')
+                slot.avail -= 1
+                slot.save()
+                messages.success(request, 'Your booking has been accepted!. Check Profile to see all actions! All Updates will be notified by email!')
             else:
                 booking = UserBooking(user=request.user,slot=slot,status=0)
                 booking.save()
-                messages.success(request, 'Your booking has been rejected!. Check Profile to see all actions')
+                messages.success(request, 'Your booking has been rejected!. Check Profile to see all actions! All Updated will be notified by email!')
     
     bookingclosetime = timezone.now() + timedelta(hours=3)
     slots = Slot.objects.filter(court=court,avail__gte=1,start__gte=bookingclosetime)

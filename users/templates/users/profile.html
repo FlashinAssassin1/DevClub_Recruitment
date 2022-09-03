@@ -13,32 +13,82 @@
             Description: {{ user.description }}
         </p>
 
-        <h3>Recent Actions</h3>
-        <table class="courts">
-            <thead>
-                <tr>
-                    <th class="th">Time of booking</th>
-                    <th class="th">Slot</th>
-                    <th class="th">Court</th>
-                    <th class="th">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for booking in userbookings %}
-                <tr>
-                    <td class="td">{{ booking.booking_time|date:"j M H:i" }}</td>
-                    <td class="td">{{ booking.slot.start|date:"j M H:i" }}-{{ booking.slot.end|date:"H:i" }}</td>
-                    <td class="td">{{ booking.slot.court }}</td>
-                    {% if booking.status == 0 %}
-                    <td class="td">Rejected</td>
-                    {% else %}
-                    <td class="td">Accepted</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-            </tbody>
+        {% if user.type == 1 %}
+            {% if userbookings %}
+                <h3>Recent Actions</h3>
+                <table class="courts">
+                    <thead>
+                        <tr>
+                            <th class="th">Time of booking</th>
+                            <th class="th">Slot</th>
+                            <th class="th">Court</th>
+                            <th class="th">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in userbookings %}
+                        <tr>
+                            <td class="td">{{ booking.booking_time|date:"j M H:i" }}</td>
+                            <td class="td">{{ booking.slot.start|date:"j M H:i" }}-{{ booking.slot.end|date:"H:i" }}</td>
+                            <td class="td">{{ booking.slot.court }}</td>
+                            {% if booking.status == 0 %}
+                            <td class="td">Rejected</td>
+                            {% else %}
+                            <td class="td">Accepted</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% else %}
+            {% if allbookings %}
+                <h3>All Bookings</h3>
+                <table class="courts">
+                    <thead>
+                        <tr>
+                            <th class="th">User</th>
+                            <th class="th">Time of booking</th>
+                            <th class="th">Slot</th>
+                            <th class="th">Court</th>
+                            <th class="th">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in allbookings %}
+                        <tr>
+                            <td class="td">{{ booking.user }}</td>
+                            <td class="td">{{ booking.booking_time|date:"j M H:i" }}</td>
+                            <td class="td">{{ booking.slot.start|date:"j M H:i" }}-{{ booking.slot.end|date:"H:i" }}</td>
+                            <td class="td">{{ booking.slot.court }}</td>
+                            {% if booking.status == 0 %}
+                            <td class="td">
+                                Rejected
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input name="stat" type="hidden" value="1">
+                                    <input name="id" type="hidden" value="{{ booking.pk }}">
+                                    <button type="submit">Accept Request</button>
+                                </form>
+                            </td>
+                            {% else %}
+                            <td class="td">
+                                Accepted
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input name="stat" type="hidden" value="0">
+                                    <input name="id" type="hidden" value="{{ booking.pk }}">
+                                    <button type="submit">Reject Request</button>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+        {% endif %}
 
-        </table>
 
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
