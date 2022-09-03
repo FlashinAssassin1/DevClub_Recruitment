@@ -18,7 +18,9 @@
                 <option value="{{ slot.pk }}">{{ slot.start|date:"j M H:i" }}-{{ slot.end|date:"H:i" }}</option>
                 {% endfor %}
             </select>
+            {% if user.type == 1 %}
             <button type="submit">Book Slot</button>
+            {% endif %}
         </form>
     {% else %}
         <h3>No Slots Currently!</h3>
