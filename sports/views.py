@@ -41,20 +41,40 @@ class CourtCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         form.instance.sport = sport
         return super().form_valid(form)
 
+class ItemCreateView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
+    model = Item
+    fields = ['name','number','image']
+
+    def test_func(self):
+        if self.request.user.type == 2:
+            return True
+        return False
+
+    def form_valid(self, form):
+        sportid = self.kwargs["sportid"]
+        sport = Sport.objects.filter(pk=sportid).first()
+        form.instance.sport = sport
+        return super().form_valid(form)
+
 @login_required
 def courtdetail(request,courtid):
     court = Court.objects.filter(pk=courtid).first()
 
     if request.method == 'POST':
         if request.user.type == 2:
-            date = request.POST['date'].split('-')
-            starttime = request.POST['starttime'].split(':')
-            endtime = request.POST['endtime'].split(':')
-            startdateobject = datetime(int(date[0]),int(date[1]),int(date[2]),int(starttime[0]),int(starttime[1]),0)
-            enddateobject = datetime(int(date[0]),int(date[1]),int(date[2]),int(endtime[0]),int(endtime[1]),0)
-
-            slot = Slot(start=startdateobject,end=enddateobject,court=court,avail=court.capacity)
-            slot.save()
+            datebeforesplit = request.POST['date']
+            startbeforesplit = request.POST['starttime']
+            endbeforesplit = request.POST['endtime']
+            if datebeforesplit and startbeforesplit and endbeforesplit:
+                date = datebeforesplit.split('-')
+                starttime = startbeforesplit.split(':')
+                endtime = endbeforesplit.split(':')
+                startdateobject = datetime(int(date[0]),int(date[1]),int(date[2]),int(starttime[0]),int(starttime[1]),0)
+                enddateobject = datetime(int(date[0]),int(date[1]),int(date[2]),int(endtime[0]),int(endtime[1]),0)
+                slot = Slot(start=startdateobject,end=enddateobject,court=court,avail=court.capacity)
+                slot.save()
+            else:
+                messages.warning(request,'fill all the fields!')
         else:
             slotid = request.POST['slot']
             slot = Slot.objects.filter(pk=slotid).first()

@@ -1,3 +1,4 @@
+from django.views.generic import ListView
 from django.shortcuts import render,redirect
 from users.forms import MemberRegisterForm
 from django.contrib import messages
@@ -42,9 +43,12 @@ def register(request):
                     'token':account_activation_token.make_token(user),
                 })
                 send_mail(subject,message,os.environ.get('EMAIL_USER'),[email])
-                print('cool')
                 messages.success(request, f'Account created for {username}! Activate from Email!')
                 return redirect('register')
+            else:
+                messages.warning(request, f'There is already an account with this email!')
+                return redirect('register')
+
     else:
         form = MemberRegisterForm()
     return render(request,'users/register.html',{'form': form})
@@ -65,17 +69,34 @@ def activate(request, uidb64, token):
         return redirect('register')
 
 def home(request):
-    sports = Sport.objects.all()
-    
+    recentbooks = UserBooking.objects.all().order_by('-modified_time')[0:5]
+    trendsports = set()
+    for booking in recentbooks:
+        if booking:
+            trendsports.add(booking.slot.court.sport)
+
     if request.method == 'POST':
         searched = request.POST['searched']
         result = Sport.objects.filter(name__contains=searched)
-        return render(request,"users/home.html",{'sports':sports,'searched': searched,'searchedsports': result})
+        return render(request,"users/home.html",{'sports':trendsports,'searched': searched,'searchedsports': result})
     else:
-        return render(request,"users/home.html",{'sports':sports})
+        return render(request,"users/home.html",{'sports':trendsports})
+
+def allsports(request):
+    allsports = Sport.objects.all()
+    return render(request,'users/allsports.html',{'allsports':allsports})
+
+class SportListView(ListView):
+    model = Sport
+    template_name = 'users/allsports.html'
+    context_object_name = 'sports'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Sport.objects.all()
 
 @login_required
-def profile(request,cool):
+def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)

@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'crispy_forms',
     'users.apps.UsersConfig',
     'sports.apps.SportsConfig',
     'django.contrib.admin',
@@ -133,8 +132,6 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_URL = 'login'
 
 AUTH_USER_MODEL = 'users.CustomUser'
-
-CRISPY_TEMPLATE_PACK = 'uni_form'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

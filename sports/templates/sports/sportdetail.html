@@ -3,6 +3,7 @@
     <h3>Welcome to the {{ sport }} page</h3>
     {% if user.type == 2 %}
         <button><a href="{% url 'court-create' sport.pk %}">Add New Court</a></button>
+        <button><a href="{% url 'item-create' sport.pk %}">Add New Item</a></button>
     {% endif %}
     <br>
     <br>
@@ -26,7 +27,6 @@
         <thead>
             <tr>
             <th class="th">Courts</th>
-            <th class="th">Rating</th>
             <th class="th">Capacity</th>
             </tr>
         </thead>
@@ -34,7 +34,6 @@
             {% for court in courts %}
                 <tr>
                     <td class="td"><a href="{% url 'court-detail' court.pk %}">{{ court }}</a></td>
-                    <td class="td">{{ court.rating }}</td>
                     <td class="td">{{ court.capacity }}</td>
                 </tr>
             {% endfor %}
