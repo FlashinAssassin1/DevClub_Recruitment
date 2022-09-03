@@ -4,5 +4,6 @@
 The framework used is `Django`.
 
 Kindly read the design doc to allow for easy testing of the website. The last page of the design doc has some points which might make it easy to check the dummy data.
+
 The website is hosted at https://devmittalapp.herokuapp.com/
 It used `heroku` and `AWS S3` (for media files).
